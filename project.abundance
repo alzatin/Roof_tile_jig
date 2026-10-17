@@ -1,13 +1,973 @@
 {
-    "atomType": "Molecule",
-    "x": 0,
-    "y": 0,
-    "uniqueID": "id-1",
-    "name": "Roof_tile_jig",
-    "topLevel": true,
-    "allAtoms": [],
-    "allConnectors": [],
-    "unitsKey": "Inches",
-    "fileTypeVersion": 1,
-    "filetypeVersion": 1
+  "atomType": "Molecule",
+  "x": 0,
+  "y": 0,
+  "uniqueID": "id-1",
+  "name": "Roof_tile_jig",
+  "ioValues": [
+    {
+      "name": "Tile Width",
+      "ioValue": 9
+    },
+    {
+      "name": "Tile Length",
+      "ioValue": 13
+    },
+    {
+      "name": "Tile Thickness",
+      "ioValue": 0.25
+    },
+    {
+      "name": "Wave Height",
+      "ioValue": 1.5
+    },
+    {
+      "name": "Hump Radius",
+      "ioValue": 1.75,
+      "currentEquation": "1.75"
+    },
+    {
+      "name": "Trough Radius",
+      "ioValue": 2
+    },
+    {
+      "name": "Edge Angle",
+      "ioValue": 30
+    },
+    {
+      "name": "Mold Base Thickness",
+      "ioValue": 1
+    }
+  ],
+  "topLevel": true,
+  "allAtoms": [
+    {
+      "atomType": "Input",
+      "x": 0,
+      "y": 0.3,
+      "uniqueID": "id-10",
+      "name": "Tile Thickness",
+      "type": "number",
+      "options": []
+    },
+    {
+      "atomType": "Molecule",
+      "x": 0.4,
+      "y": 0.6,
+      "uniqueID": "id-108",
+      "name": "Slump Mold",
+      "ioValues": [
+        {
+          "name": "Tile Width",
+          "ioValue": 9
+        },
+        {
+          "name": "Wave Height",
+          "ioValue": 1.5
+        },
+        {
+          "name": "Hump Radius",
+          "ioValue": 1.75
+        },
+        {
+          "name": "Trough Radius",
+          "ioValue": 2
+        },
+        {
+          "name": "Edge Angle",
+          "ioValue": 30
+        },
+        {
+          "name": "Base Thickness",
+          "ioValue": 1
+        },
+        {
+          "name": "Tile Length",
+          "ioValue": 13
+        },
+        {
+          "name": "Air Holes",
+          "ioValue": "__GEOMETRY_INPUT__"
+        }
+      ],
+      "topLevel": false,
+      "allAtoms": [
+        {
+          "atomType": "Output",
+          "x": 1,
+          "y": 0.5,
+          "uniqueID": "id-110",
+          "ioValues": [
+            {
+              "name": "number or geometry",
+              "ioValue": "__GEOMETRY_INPUT__"
+            }
+          ]
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.2,
+          "uniqueID": "id-112",
+          "name": "Tile Width",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.2,
+          "uniqueID": "id-115",
+          "name": "Wave Height",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.3,
+          "uniqueID": "id-118",
+          "name": "Hump Radius",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.4,
+          "uniqueID": "id-121",
+          "name": "Trough Radius",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.5,
+          "uniqueID": "id-124",
+          "name": "Edge Angle",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.6,
+          "uniqueID": "id-127",
+          "name": "Base Thickness",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.7,
+          "uniqueID": "id-130",
+          "name": "Tile Length",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.8,
+          "uniqueID": "id-133",
+          "name": "Air Holes",
+          "type": "geometry",
+          "options": []
+        },
+        {
+          "atomType": "Code",
+          "x": 0.4,
+          "y": 0.5,
+          "uniqueID": "id-136",
+          "ioValues": [
+            {
+              "name": "width",
+              "ioValue": 9
+            },
+            {
+              "name": "waveHeight",
+              "ioValue": 1.5
+            },
+            {
+              "name": "humpRadius",
+              "ioValue": 1.75
+            },
+            {
+              "name": "troughRadius",
+              "ioValue": 2
+            },
+            {
+              "name": "edgeAngle",
+              "ioValue": 30
+            },
+            {
+              "name": "baseThickness",
+              "ioValue": 1
+            }
+          ],
+          "interpreterVersion": 1,
+          "code": "/**\n * Slump mold cross-section: the top follows the tile's underside (same symmetric profile as\n * the Tile), the bottom is flat, baseThickness below the trough bottoms.\n */\nfunction run(\n  width: number = 9, // across the tile, inches\n  waveHeight: number = 1.5, // trough bottom to crest\n  humpRadius: number = 2, // radius of the centre hump (tile underside)\n  troughRadius: number = 2, // radius of the troughs (tile underside)\n  edgeAngle: number = 30, // how steeply the edges rise, degrees\n  baseThickness: number = 1, // solid material below the trough bottoms\n): Assembly {\n  // Symmetric profile, crest at x = width / 2. Out from the centre (distance d):\n  // convex circular hump (humpRadius) -> concave circular trough (troughRadius, bottom at y = 0)\n  // -> trough keeps curving up to edgeAngle -> straight run to the edge.\n  const half = width / 2;\n  const R = humpRadius, r = troughRadius;\n  if (waveHeight > R + r) throw new Error(\"waveHeight can be at most humpRadius + troughRadius\");\n  const theta = Math.acos(1 - waveHeight / (R + r)); // where hump meets trough\n  const phi = (edgeAngle * Math.PI) / 180;\n  const a1 = R * Math.sin(theta); // end of hump arc\n  const xc = (R + r) * Math.sin(theta); // trough bottom\n  const dE = xc + r * Math.sin(phi); // end of trough arc\n  if (dE > half) throw new Error(\"Profile wider than the tile: reduce the radii or edgeAngle\");\n  const yE = r - r * Math.cos(phi);\n\n  // Height and slope (dy/dd) at distance d from the centre\n  const at = (d: number): [number, number] => {\n    if (d <= a1) { const s = Math.sqrt(R * R - d * d); return [waveHeight - R + s, -d / s]; }\n    if (d <= dE) { const e = d - xc, s = Math.sqrt(r * r - e * e); return [r - s, e / s]; }\n    return [yE + Math.tan(phi) * (d - dE), Math.tan(phi)];\n  };\n\n  // Sample each piece, including its ends, then mirror to both halves\n  const ds: number[] = [];\n  const piece = (from: number, to: number, steps: number) => {\n    for (let i = ds.length ? 1 : 0; i <= steps; i++) ds.push(from + ((to - from) * i) / steps);\n  };\n  piece(0, a1, 8);\n  piece(a1, xc, 6);\n  piece(xc, dE, 4);\n  if (half - dE > 1e-6) piece(dE, half, 1);\n  const us = [...ds.slice(1).reverse().map((d) => half - d), ...ds.map((d) => half + d)];\n  const pts = us.map((u) => {\n    const [y, m] = at(Math.min(Math.abs(u - half), half));\n    return { u, y, slope: u < half ? -m : m };\n  });\n\n  // Flat base, then the top surface traced right to left\n  const n = pts.length - 1;\n  let pen = replicad.draw([0, -baseThickness]).lineTo([width, -baseThickness]).lineTo([pts[n].u, pts[n].y]);\n  for (let i = n - 1; i >= 0; i--) {\n    pen = pen.smoothSplineTo([pts[i].u, pts[i].y], { startTangent: [-1, -pts[i + 1].slope], endTangent: [-1, -pts[i].slope] });\n  }\n  return new Assembly({ geometry: pen.close() });\n}\n",
+          "compiledCode": "\"use strict\";\n/**\n * Slump mold cross-section: the top follows the tile's underside (same symmetric profile as\n * the Tile), the bottom is flat, baseThickness below the trough bottoms.\n */\nfunction run(width = 9, // across the tile, inches\nwaveHeight = 1.5, // trough bottom to crest\nhumpRadius = 2, // radius of the centre hump (tile underside)\ntroughRadius = 2, // radius of the troughs (tile underside)\nedgeAngle = 30, // how steeply the edges rise, degrees\nbaseThickness = 1) {\n    // Symmetric profile, crest at x = width / 2. Out from the centre (distance d):\n    // convex circular hump (humpRadius) -> concave circular trough (troughRadius, bottom at y = 0)\n    // -> trough keeps curving up to edgeAngle -> straight run to the edge.\n    const half = width / 2;\n    const R = humpRadius, r = troughRadius;\n    if (waveHeight > R + r)\n        throw new Error(\"waveHeight can be at most humpRadius + troughRadius\");\n    const theta = Math.acos(1 - waveHeight / (R + r)); // where hump meets trough\n    const phi = (edgeAngle * Math.PI) / 180;\n    const a1 = R * Math.sin(theta); // end of hump arc\n    const xc = (R + r) * Math.sin(theta); // trough bottom\n    const dE = xc + r * Math.sin(phi); // end of trough arc\n    if (dE > half)\n        throw new Error(\"Profile wider than the tile: reduce the radii or edgeAngle\");\n    const yE = r - r * Math.cos(phi);\n    // Height and slope (dy/dd) at distance d from the centre\n    const at = (d) => {\n        if (d <= a1) {\n            const s = Math.sqrt(R * R - d * d);\n            return [waveHeight - R + s, -d / s];\n        }\n        if (d <= dE) {\n            const e = d - xc, s = Math.sqrt(r * r - e * e);\n            return [r - s, e / s];\n        }\n        return [yE + Math.tan(phi) * (d - dE), Math.tan(phi)];\n    };\n    // Sample each piece, including its ends, then mirror to both halves\n    const ds = [];\n    const piece = (from, to, steps) => {\n        for (let i = ds.length ? 1 : 0; i <= steps; i++)\n            ds.push(from + ((to - from) * i) / steps);\n    };\n    piece(0, a1, 8);\n    piece(a1, xc, 6);\n    piece(xc, dE, 4);\n    if (half - dE > 1e-6)\n        piece(dE, half, 1);\n    const us = [...ds.slice(1).reverse().map((d) => half - d), ...ds.map((d) => half + d)];\n    const pts = us.map((u) => {\n        const [y, m] = at(Math.min(Math.abs(u - half), half));\n        return { u, y, slope: u < half ? -m : m };\n    });\n    // Flat base, then the top surface traced right to left\n    const n = pts.length - 1;\n    let pen = replicad.draw([0, -baseThickness]).lineTo([width, -baseThickness]).lineTo([pts[n].u, pts[n].y]);\n    for (let i = n - 1; i >= 0; i--) {\n        pen = pen.smoothSplineTo([pts[i].u, pts[i].y], { startTangent: [-1, -pts[i + 1].slope], endTangent: [-1, -pts[i].slope] });\n    }\n    return new Assembly({ geometry: pen.close() });\n}\n"
+        },
+        {
+          "atomType": "Extrude",
+          "x": 0.5,
+          "y": 0.5,
+          "uniqueID": "id-150",
+          "ioValues": [
+            {
+              "name": "geometry",
+              "ioValue": "__GEOMETRY_INPUT__"
+            },
+            {
+              "name": "height",
+              "ioValue": 13
+            }
+          ]
+        },
+        {
+          "atomType": "Rotate",
+          "x": 0.7,
+          "y": 0.5,
+          "uniqueID": "id-154",
+          "ioValues": [
+            {
+              "name": "geometry",
+              "ioValue": "__GEOMETRY_INPUT__"
+            },
+            {
+              "name": "x-axis degrees",
+              "ioValue": 90
+            },
+            {
+              "name": "y-axis degrees",
+              "ioValue": 0
+            },
+            {
+              "name": "z-axis degrees",
+              "ioValue": 0
+            }
+          ]
+        },
+        {
+          "atomType": "Difference",
+          "x": 0.8,
+          "y": 0.6,
+          "uniqueID": "id-160",
+          "ioValues": [
+            {
+              "name": "retain",
+              "ioValue": "__GEOMETRY_INPUT__"
+            },
+            {
+              "name": "remove",
+              "ioValue": "__GEOMETRY_INPUT__"
+            }
+          ]
+        }
+      ],
+      "allConnectors": [
+        {
+          "ap2Name": "width",
+          "ap1ID": "id-112",
+          "ap2ID": "id-136"
+        },
+        {
+          "ap2Name": "waveHeight",
+          "ap1ID": "id-115",
+          "ap2ID": "id-136"
+        },
+        {
+          "ap2Name": "humpRadius",
+          "ap1ID": "id-118",
+          "ap2ID": "id-136"
+        },
+        {
+          "ap2Name": "troughRadius",
+          "ap1ID": "id-121",
+          "ap2ID": "id-136"
+        },
+        {
+          "ap2Name": "edgeAngle",
+          "ap1ID": "id-124",
+          "ap2ID": "id-136"
+        },
+        {
+          "ap2Name": "baseThickness",
+          "ap1ID": "id-127",
+          "ap2ID": "id-136"
+        },
+        {
+          "ap2Name": "height",
+          "ap1ID": "id-130",
+          "ap2ID": "id-150"
+        },
+        {
+          "ap2Name": "remove",
+          "ap1ID": "id-133",
+          "ap2ID": "id-160"
+        },
+        {
+          "ap2Name": "geometry",
+          "ap1ID": "id-136",
+          "ap2ID": "id-150"
+        },
+        {
+          "ap2Name": "geometry",
+          "ap1ID": "id-150",
+          "ap2ID": "id-154"
+        },
+        {
+          "ap2Name": "retain",
+          "ap1ID": "id-154",
+          "ap2ID": "id-160"
+        },
+        {
+          "ap2Name": "number or geometry",
+          "ap1ID": "id-160",
+          "ap2ID": "id-110"
+        }
+      ],
+      "fileTypeVersion": 1
+    },
+    {
+      "atomType": "Input",
+      "x": 0,
+      "y": 0.4,
+      "uniqueID": "id-13",
+      "name": "Wave Height",
+      "type": "number",
+      "options": []
+    },
+    {
+      "atomType": "Input",
+      "x": 0,
+      "y": 0.5,
+      "uniqueID": "id-16",
+      "name": "Hump Radius",
+      "type": "number",
+      "options": []
+    },
+    {
+      "atomType": "Assembly",
+      "x": 0.7,
+      "y": 0.5,
+      "uniqueID": "id-164",
+      "ioValues": [
+        {
+          "name": "makeDisjoint",
+          "ioValue": false
+        },
+        {
+          "name": "Shape 1",
+          "ioValue": "__GEOMETRY_INPUT__"
+        },
+        {
+          "name": "Shape2",
+          "ioValue": "__GEOMETRY_INPUT__"
+        },
+        {
+          "name": "Shape3",
+          "ioValue": "__GEOMETRY_INPUT__"
+        }
+      ]
+    },
+    {
+      "atomType": "Export",
+      "x": 0.5,
+      "y": 0.8,
+      "uniqueID": "id-170",
+      "ioValues": [
+        {
+          "name": "geometry",
+          "ioValue": "__GEOMETRY_INPUT__"
+        },
+        {
+          "name": "File Type",
+          "ioValue": "STEP",
+          "currentEquation": "STEP"
+        },
+        {
+          "name": "Resolution (dpi)",
+          "ioValue": 96
+        },
+        {
+          "name": "STL Tolerance",
+          "ioValue": 0.002
+        },
+        {
+          "name": "Part Name",
+          "ioValue": "Roof_tile_jig",
+          "currentEquation": "Roof_tile_jig"
+        }
+      ],
+      "type": null,
+      "resolution": 96,
+      "importIndex": 0,
+      "partName": "Roof_tile_jig"
+    },
+    {
+      "atomType": "Input",
+      "x": 0,
+      "y": 0.6,
+      "uniqueID": "id-19",
+      "name": "Trough Radius",
+      "type": "number",
+      "options": []
+    },
+    {
+      "atomType": "Output",
+      "x": 1,
+      "y": 0.5,
+      "uniqueID": "id-2",
+      "ioValues": [
+        {
+          "name": "number or geometry",
+          "ioValue": "__GEOMETRY_INPUT__"
+        }
+      ]
+    },
+    {
+      "atomType": "Input",
+      "x": 0,
+      "y": 0.7,
+      "uniqueID": "id-22",
+      "name": "Edge Angle",
+      "type": "number",
+      "options": []
+    },
+    {
+      "atomType": "Input",
+      "x": 0,
+      "y": 0.8,
+      "uniqueID": "id-25",
+      "name": "Mold Base Thickness",
+      "type": "number",
+      "options": []
+    },
+    {
+      "atomType": "Molecule",
+      "x": 0.4,
+      "y": 0.9,
+      "uniqueID": "id-28",
+      "name": "Air Hole Pattern",
+      "ioValues": [
+        {
+          "name": "Tile Width",
+          "ioValue": 9
+        },
+        {
+          "name": "Tile Length",
+          "ioValue": 13
+        }
+      ],
+      "topLevel": false,
+      "allAtoms": [
+        {
+          "atomType": "Output",
+          "x": 1,
+          "y": 0.5,
+          "uniqueID": "id-30",
+          "ioValues": [
+            {
+              "name": "number or geometry",
+              "ioValue": "__GEOMETRY_INPUT__"
+            }
+          ]
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.2,
+          "uniqueID": "id-32",
+          "name": "Tile Width",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.2,
+          "uniqueID": "id-35",
+          "name": "Tile Length",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Code",
+          "x": 0.5,
+          "y": 0.5,
+          "uniqueID": "id-38",
+          "ioValues": [
+            {
+              "name": "width",
+              "ioValue": 9
+            },
+            {
+              "name": "length",
+              "ioValue": 13
+            },
+            {
+              "name": "cellSize",
+              "ioValue": 0.375
+            },
+            {
+              "name": "wall",
+              "ioValue": 0.375
+            },
+            {
+              "name": "edgeMargin",
+              "ioValue": 0.375
+            },
+            {
+              "name": "zBottom",
+              "ioValue": -3
+            },
+            {
+              "name": "zTop",
+              "ioValue": 5
+            }
+          ],
+          "interpreterVersion": 1,
+          "code": "/**\n * Honeycomb air-hole cutter: vertical hex prisms in staggered rows, centered on the tile\n * footprint (x 0..width, y -length..0), kept edgeMargin in from every edge.\n * Subtract it from the Tile and the Slump Mold so their holes line up.\n */\nfunction run(\n  width: number = 9, // tile width (x)\n  length: number = 13, // tile length (y, from -length to 0)\n  cellSize: number = 0.375, // hex hole across the flats\n  wall: number = 0.375, // material left between neighbouring holes\n  edgeMargin: number = 0.375, // solid rim around the edge\n  zBottom: number = -3, // cutter runs from here...\n  zTop: number = 5, // ...to here, through both parts\n): Assembly {\n  const pitch = cellSize + wall; // centre spacing along a row\n  const r = cellSize / Math.sqrt(3); // hex corner radius (points along y)\n  const rowStep = (pitch * Math.sqrt(3)) / 2;\n\n  // One hex prism at the origin, points facing +/-y\n  let pen = replicad.draw([0, r]);\n  for (let k = 1; k < 6; k++) {\n    const a = Math.PI / 2 + (k * Math.PI) / 3;\n    pen = pen.lineTo([r * Math.cos(a), r * Math.sin(a)]);\n  }\n  const hex = pen.close().sketchOnPlane().extrude(zTop - zBottom).translate(0, 0, zBottom);\n\n  const xMin = edgeMargin + cellSize / 2, xMax = width - edgeMargin - cellSize / 2;\n  const yMin = -length + edgeMargin + r, yMax = -edgeMargin - r;\n  if (xMax < xMin || yMax < yMin) throw new Error(\"No room for holes: reduce cellSize or edgeMargin\");\n\n  const cols = Math.floor((xMax - xMin) / pitch) + 1;\n  const rows = Math.floor((yMax - yMin) / rowStep) + 1;\n  const x0 = (xMin + xMax) / 2 - ((cols - 1) * pitch) / 2;\n  const y0 = (yMin + yMax) / 2 - ((rows - 1) * rowStep) / 2;\n\n  const prisms = [];\n  for (let j = 0; j < rows; j++) {\n    const y = y0 + j * rowStep;\n    const shift = j % 2 ? pitch / 2 : 0;\n    for (let i = -1; i <= cols; i++) {\n      const x = x0 + shift + i * pitch;\n      if (x < xMin - 1e-6 || x > xMax + 1e-6) continue;\n      prisms.push(hex.clone().translate(x, y, 0));\n    }\n  }\n  console.log(`${prisms.length} holes`);\n  return new Assembly({ geometry: replicad.makeCompound(prisms) });\n}\n",
+          "compiledCode": "\"use strict\";\n/**\n * Honeycomb air-hole cutter: vertical hex prisms in staggered rows, centered on the tile\n * footprint (x 0..width, y -length..0), kept edgeMargin in from every edge.\n * Subtract it from the Tile and the Slump Mold so their holes line up.\n */\nfunction run(width = 9, // tile width (x)\nlength = 13, // tile length (y, from -length to 0)\ncellSize = 0.375, // hex hole across the flats\nwall = 0.375, // material left between neighbouring holes\nedgeMargin = 0.375, // solid rim around the edge\nzBottom = -3, // cutter runs from here...\nzTop = 5) {\n    const pitch = cellSize + wall; // centre spacing along a row\n    const r = cellSize / Math.sqrt(3); // hex corner radius (points along y)\n    const rowStep = (pitch * Math.sqrt(3)) / 2;\n    // One hex prism at the origin, points facing +/-y\n    let pen = replicad.draw([0, r]);\n    for (let k = 1; k < 6; k++) {\n        const a = Math.PI / 2 + (k * Math.PI) / 3;\n        pen = pen.lineTo([r * Math.cos(a), r * Math.sin(a)]);\n    }\n    const hex = pen.close().sketchOnPlane().extrude(zTop - zBottom).translate(0, 0, zBottom);\n    const xMin = edgeMargin + cellSize / 2, xMax = width - edgeMargin - cellSize / 2;\n    const yMin = -length + edgeMargin + r, yMax = -edgeMargin - r;\n    if (xMax < xMin || yMax < yMin)\n        throw new Error(\"No room for holes: reduce cellSize or edgeMargin\");\n    const cols = Math.floor((xMax - xMin) / pitch) + 1;\n    const rows = Math.floor((yMax - yMin) / rowStep) + 1;\n    const x0 = (xMin + xMax) / 2 - ((cols - 1) * pitch) / 2;\n    const y0 = (yMin + yMax) / 2 - ((rows - 1) * rowStep) / 2;\n    const prisms = [];\n    for (let j = 0; j < rows; j++) {\n        const y = y0 + j * rowStep;\n        const shift = j % 2 ? pitch / 2 : 0;\n        for (let i = -1; i <= cols; i++) {\n            const x = x0 + shift + i * pitch;\n            if (x < xMin - 1e-6 || x > xMax + 1e-6)\n                continue;\n            prisms.push(hex.clone().translate(x, y, 0));\n        }\n    }\n    console.log(`${prisms.length} holes`);\n    return new Assembly({ geometry: replicad.makeCompound(prisms) });\n}\n"
+        }
+      ],
+      "allConnectors": [
+        {
+          "ap2Name": "width",
+          "ap1ID": "id-32",
+          "ap2ID": "id-38"
+        },
+        {
+          "ap2Name": "length",
+          "ap1ID": "id-35",
+          "ap2ID": "id-38"
+        },
+        {
+          "ap2Name": "number or geometry",
+          "ap1ID": "id-38",
+          "ap2ID": "id-30"
+        }
+      ],
+      "fileTypeVersion": 1
+    },
+    {
+      "atomType": "Input",
+      "x": 0,
+      "y": 0.2,
+      "uniqueID": "id-4",
+      "name": "Tile Width",
+      "type": "number",
+      "options": []
+    },
+    {
+      "atomType": "Molecule",
+      "x": 0.4,
+      "y": 0.3,
+      "uniqueID": "id-53",
+      "name": "Tile",
+      "ioValues": [
+        {
+          "name": "Tile Width",
+          "ioValue": 9
+        },
+        {
+          "name": "Tile Thickness",
+          "ioValue": 0.25
+        },
+        {
+          "name": "Wave Height",
+          "ioValue": 1.5
+        },
+        {
+          "name": "Hump Radius",
+          "ioValue": 1.75
+        },
+        {
+          "name": "Trough Radius",
+          "ioValue": 2
+        },
+        {
+          "name": "Edge Angle",
+          "ioValue": 30
+        },
+        {
+          "name": "Tile Length",
+          "ioValue": 13
+        },
+        {
+          "name": "Air Holes",
+          "ioValue": "__GEOMETRY_INPUT__"
+        }
+      ],
+      "topLevel": false,
+      "allAtoms": [
+        {
+          "atomType": "Difference",
+          "x": 0.8,
+          "y": 0.6,
+          "uniqueID": "id-104",
+          "ioValues": [
+            {
+              "name": "retain",
+              "ioValue": "__GEOMETRY_INPUT__"
+            },
+            {
+              "name": "remove",
+              "ioValue": "__GEOMETRY_INPUT__"
+            }
+          ]
+        },
+        {
+          "atomType": "Output",
+          "x": 1,
+          "y": 0.5,
+          "uniqueID": "id-55",
+          "ioValues": [
+            {
+              "name": "number or geometry",
+              "ioValue": "__GEOMETRY_INPUT__"
+            }
+          ]
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.2,
+          "uniqueID": "id-57",
+          "name": "Tile Width",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.2,
+          "uniqueID": "id-60",
+          "name": "Tile Thickness",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.3,
+          "uniqueID": "id-63",
+          "name": "Wave Height",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.4,
+          "uniqueID": "id-66",
+          "name": "Hump Radius",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.5,
+          "uniqueID": "id-69",
+          "name": "Trough Radius",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.6,
+          "uniqueID": "id-72",
+          "name": "Edge Angle",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.7,
+          "uniqueID": "id-75",
+          "name": "Tile Length",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.8,
+          "uniqueID": "id-78",
+          "name": "Air Holes",
+          "type": "geometry",
+          "options": []
+        },
+        {
+          "atomType": "Code",
+          "x": 0.4,
+          "y": 0.5,
+          "uniqueID": "id-81",
+          "ioValues": [
+            {
+              "name": "width",
+              "ioValue": 9
+            },
+            {
+              "name": "thickness",
+              "ioValue": 0.25
+            },
+            {
+              "name": "waveHeight",
+              "ioValue": 1.5
+            },
+            {
+              "name": "humpRadius",
+              "ioValue": 1.75
+            },
+            {
+              "name": "troughRadius",
+              "ioValue": 2
+            },
+            {
+              "name": "edgeAngle",
+              "ioValue": 30
+            }
+          ],
+          "interpreterVersion": 1,
+          "code": "/**\n * Tile cross-section: symmetric profile with a circular hump in the centre, concave circular\n * troughs either side, rising to the edges. Offset normal to the curve by the tile thickness.\n * x runs across the tile width, y is height (trough bottoms at y = 0).\n */\nfunction run(\n  width: number = 9, // across the tile, inches\n  thickness: number = 0.25, // tile thickness\n  waveHeight: number = 1.5, // trough bottom to crest\n  humpRadius: number = 2, // radius of the centre hump (underside)\n  troughRadius: number = 2, // radius of the troughs (underside)\n  edgeAngle: number = 30, // how steeply the edges rise, degrees\n): Assembly {\n  // Symmetric profile, crest at x = width / 2. Out from the centre (distance d):\n  // convex circular hump (humpRadius) -> concave circular trough (troughRadius, bottom at y = 0)\n  // -> trough keeps curving up to edgeAngle -> straight run to the edge.\n  const half = width / 2;\n  const R = humpRadius, r = troughRadius;\n  if (waveHeight > R + r) throw new Error(\"waveHeight can be at most humpRadius + troughRadius\");\n  const theta = Math.acos(1 - waveHeight / (R + r)); // where hump meets trough\n  const phi = (edgeAngle * Math.PI) / 180;\n  const a1 = R * Math.sin(theta); // end of hump arc\n  const xc = (R + r) * Math.sin(theta); // trough bottom\n  const dE = xc + r * Math.sin(phi); // end of trough arc\n  if (dE > half) throw new Error(\"Profile wider than the tile: reduce the radii or edgeAngle\");\n  const yE = r - r * Math.cos(phi);\n\n  // Height and slope (dy/dd) at distance d from the centre\n  const at = (d: number): [number, number] => {\n    if (d <= a1) { const s = Math.sqrt(R * R - d * d); return [waveHeight - R + s, -d / s]; }\n    if (d <= dE) { const e = d - xc, s = Math.sqrt(r * r - e * e); return [r - s, e / s]; }\n    return [yE + Math.tan(phi) * (d - dE), Math.tan(phi)];\n  };\n\n  // Sample each piece, including its ends, then mirror to both halves\n  const ds: number[] = [];\n  const piece = (from: number, to: number, steps: number) => {\n    for (let i = ds.length ? 1 : 0; i <= steps; i++) ds.push(from + ((to - from) * i) / steps);\n  };\n  piece(0, a1, 8);\n  piece(a1, xc, 6);\n  piece(xc, dE, 4);\n  if (half - dE > 1e-6) piece(dE, half, 1);\n  const us = [...ds.slice(1).reverse().map((d) => half - d), ...ds.map((d) => half + d)];\n  const pts = us.map((u) => {\n    const [y, m] = at(Math.min(Math.abs(u - half), half));\n    return { u, y, slope: u < half ? -m : m };\n  });\n\n  // Underside along the profile, top side offset along the normal by the thickness\n  const n = pts.length - 1;\n  const top = pts.map(({ u, y, slope }) => {\n    const len = Math.sqrt(1 + slope * slope);\n    return [u - (slope / len) * thickness, y + thickness / len] as [number, number];\n  });\n  let pen = replicad.draw([pts[0].u, pts[0].y]);\n  for (let i = 1; i <= n; i++) {\n    pen = pen.smoothSplineTo([pts[i].u, pts[i].y], { startTangent: [1, pts[i - 1].slope], endTangent: [1, pts[i].slope] });\n  }\n  pen = pen.lineTo(top[n]);\n  for (let i = n - 1; i >= 0; i--) {\n    pen = pen.smoothSplineTo(top[i], { startTangent: [-1, -pts[i + 1].slope], endTangent: [-1, -pts[i].slope] });\n  }\n  return new Assembly({ geometry: pen.close() });\n}\n",
+          "compiledCode": "\"use strict\";\n/**\n * Tile cross-section: symmetric profile with a circular hump in the centre, concave circular\n * troughs either side, rising to the edges. Offset normal to the curve by the tile thickness.\n * x runs across the tile width, y is height (trough bottoms at y = 0).\n */\nfunction run(width = 9, // across the tile, inches\nthickness = 0.25, // tile thickness\nwaveHeight = 1.5, // trough bottom to crest\nhumpRadius = 2, // radius of the centre hump (underside)\ntroughRadius = 2, // radius of the troughs (underside)\nedgeAngle = 30) {\n    // Symmetric profile, crest at x = width / 2. Out from the centre (distance d):\n    // convex circular hump (humpRadius) -> concave circular trough (troughRadius, bottom at y = 0)\n    // -> trough keeps curving up to edgeAngle -> straight run to the edge.\n    const half = width / 2;\n    const R = humpRadius, r = troughRadius;\n    if (waveHeight > R + r)\n        throw new Error(\"waveHeight can be at most humpRadius + troughRadius\");\n    const theta = Math.acos(1 - waveHeight / (R + r)); // where hump meets trough\n    const phi = (edgeAngle * Math.PI) / 180;\n    const a1 = R * Math.sin(theta); // end of hump arc\n    const xc = (R + r) * Math.sin(theta); // trough bottom\n    const dE = xc + r * Math.sin(phi); // end of trough arc\n    if (dE > half)\n        throw new Error(\"Profile wider than the tile: reduce the radii or edgeAngle\");\n    const yE = r - r * Math.cos(phi);\n    // Height and slope (dy/dd) at distance d from the centre\n    const at = (d) => {\n        if (d <= a1) {\n            const s = Math.sqrt(R * R - d * d);\n            return [waveHeight - R + s, -d / s];\n        }\n        if (d <= dE) {\n            const e = d - xc, s = Math.sqrt(r * r - e * e);\n            return [r - s, e / s];\n        }\n        return [yE + Math.tan(phi) * (d - dE), Math.tan(phi)];\n    };\n    // Sample each piece, including its ends, then mirror to both halves\n    const ds = [];\n    const piece = (from, to, steps) => {\n        for (let i = ds.length ? 1 : 0; i <= steps; i++)\n            ds.push(from + ((to - from) * i) / steps);\n    };\n    piece(0, a1, 8);\n    piece(a1, xc, 6);\n    piece(xc, dE, 4);\n    if (half - dE > 1e-6)\n        piece(dE, half, 1);\n    const us = [...ds.slice(1).reverse().map((d) => half - d), ...ds.map((d) => half + d)];\n    const pts = us.map((u) => {\n        const [y, m] = at(Math.min(Math.abs(u - half), half));\n        return { u, y, slope: u < half ? -m : m };\n    });\n    // Underside along the profile, top side offset along the normal by the thickness\n    const n = pts.length - 1;\n    const top = pts.map(({ u, y, slope }) => {\n        const len = Math.sqrt(1 + slope * slope);\n        return [u - (slope / len) * thickness, y + thickness / len];\n    });\n    let pen = replicad.draw([pts[0].u, pts[0].y]);\n    for (let i = 1; i <= n; i++) {\n        pen = pen.smoothSplineTo([pts[i].u, pts[i].y], { startTangent: [1, pts[i - 1].slope], endTangent: [1, pts[i].slope] });\n    }\n    pen = pen.lineTo(top[n]);\n    for (let i = n - 1; i >= 0; i--) {\n        pen = pen.smoothSplineTo(top[i], { startTangent: [-1, -pts[i + 1].slope], endTangent: [-1, -pts[i].slope] });\n    }\n    return new Assembly({ geometry: pen.close() });\n}\n"
+        },
+        {
+          "atomType": "Extrude",
+          "x": 0.5,
+          "y": 0.5,
+          "uniqueID": "id-94",
+          "ioValues": [
+            {
+              "name": "geometry",
+              "ioValue": "__GEOMETRY_INPUT__"
+            },
+            {
+              "name": "height",
+              "ioValue": 13
+            }
+          ]
+        },
+        {
+          "atomType": "Rotate",
+          "x": 0.7,
+          "y": 0.5,
+          "uniqueID": "id-98",
+          "ioValues": [
+            {
+              "name": "geometry",
+              "ioValue": "__GEOMETRY_INPUT__"
+            },
+            {
+              "name": "x-axis degrees",
+              "ioValue": 90
+            },
+            {
+              "name": "y-axis degrees",
+              "ioValue": 0
+            },
+            {
+              "name": "z-axis degrees",
+              "ioValue": 0
+            }
+          ]
+        }
+      ],
+      "allConnectors": [
+        {
+          "ap2Name": "number or geometry",
+          "ap1ID": "id-104",
+          "ap2ID": "id-55"
+        },
+        {
+          "ap2Name": "width",
+          "ap1ID": "id-57",
+          "ap2ID": "id-81"
+        },
+        {
+          "ap2Name": "thickness",
+          "ap1ID": "id-60",
+          "ap2ID": "id-81"
+        },
+        {
+          "ap2Name": "waveHeight",
+          "ap1ID": "id-63",
+          "ap2ID": "id-81"
+        },
+        {
+          "ap2Name": "humpRadius",
+          "ap1ID": "id-66",
+          "ap2ID": "id-81"
+        },
+        {
+          "ap2Name": "troughRadius",
+          "ap1ID": "id-69",
+          "ap2ID": "id-81"
+        },
+        {
+          "ap2Name": "edgeAngle",
+          "ap1ID": "id-72",
+          "ap2ID": "id-81"
+        },
+        {
+          "ap2Name": "height",
+          "ap1ID": "id-75",
+          "ap2ID": "id-94"
+        },
+        {
+          "ap2Name": "remove",
+          "ap1ID": "id-78",
+          "ap2ID": "id-104"
+        },
+        {
+          "ap2Name": "geometry",
+          "ap1ID": "id-81",
+          "ap2ID": "id-94"
+        },
+        {
+          "ap2Name": "geometry",
+          "ap1ID": "id-94",
+          "ap2ID": "id-98"
+        },
+        {
+          "ap2Name": "retain",
+          "ap1ID": "id-98",
+          "ap2ID": "id-104"
+        }
+      ],
+      "fileTypeVersion": 1
+    },
+    {
+      "atomType": "Input",
+      "x": 0,
+      "y": 0.2,
+      "uniqueID": "id-7",
+      "name": "Tile Length",
+      "type": "number",
+      "options": []
+    }
+  ],
+  "allConnectors": [
+    {
+      "ap2Name": "Tile Thickness",
+      "ap1ID": "id-10",
+      "ap2ID": "id-53"
+    },
+    {
+      "ap2Name": "Shape2",
+      "ap1ID": "id-108",
+      "ap2ID": "id-164"
+    },
+    {
+      "ap2Name": "Wave Height",
+      "ap1ID": "id-13",
+      "ap2ID": "id-108"
+    },
+    {
+      "ap2Name": "Wave Height",
+      "ap1ID": "id-13",
+      "ap2ID": "id-53"
+    },
+    {
+      "ap2Name": "Hump Radius",
+      "ap1ID": "id-16",
+      "ap2ID": "id-108"
+    },
+    {
+      "ap2Name": "Hump Radius",
+      "ap1ID": "id-16",
+      "ap2ID": "id-53"
+    },
+    {
+      "ap2Name": "number or geometry",
+      "ap1ID": "id-164",
+      "ap2ID": "id-2"
+    },
+    {
+      "ap2Name": "Trough Radius",
+      "ap1ID": "id-19",
+      "ap2ID": "id-108"
+    },
+    {
+      "ap2Name": "Trough Radius",
+      "ap1ID": "id-19",
+      "ap2ID": "id-53"
+    },
+    {
+      "ap2Name": "Edge Angle",
+      "ap1ID": "id-22",
+      "ap2ID": "id-108"
+    },
+    {
+      "ap2Name": "Edge Angle",
+      "ap1ID": "id-22",
+      "ap2ID": "id-53"
+    },
+    {
+      "ap2Name": "Base Thickness",
+      "ap1ID": "id-25",
+      "ap2ID": "id-108"
+    },
+    {
+      "ap2Name": "Air Holes",
+      "ap1ID": "id-28",
+      "ap2ID": "id-108"
+    },
+    {
+      "ap2Name": "Air Holes",
+      "ap1ID": "id-28",
+      "ap2ID": "id-53"
+    },
+    {
+      "ap2Name": "Tile Width",
+      "ap1ID": "id-4",
+      "ap2ID": "id-108"
+    },
+    {
+      "ap2Name": "Tile Width",
+      "ap1ID": "id-4",
+      "ap2ID": "id-28"
+    },
+    {
+      "ap2Name": "Tile Width",
+      "ap1ID": "id-4",
+      "ap2ID": "id-53"
+    },
+    {
+      "ap2Name": "Shape 1",
+      "ap1ID": "id-53",
+      "ap2ID": "id-164"
+    },
+    {
+      "ap2Name": "geometry",
+      "ap1ID": "id-53",
+      "ap2ID": "id-170"
+    },
+    {
+      "ap2Name": "Tile Length",
+      "ap1ID": "id-7",
+      "ap2ID": "id-108"
+    },
+    {
+      "ap2Name": "Tile Length",
+      "ap1ID": "id-7",
+      "ap2ID": "id-28"
+    },
+    {
+      "ap2Name": "Tile Length",
+      "ap1ID": "id-7",
+      "ap2ID": "id-53"
+    }
+  ],
+  "unitsKey": "Inches",
+  "fileTypeVersion": 1,
+  "filetypeVersion": 1
 }
